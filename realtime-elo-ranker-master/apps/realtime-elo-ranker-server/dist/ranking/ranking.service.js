@@ -5,20 +5,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.RankingService = void 0;
 const common_1 = require("@nestjs/common");
 const event_emitter_1 = require("@nestjs/event-emitter");
-const ranking_controller_1 = require("./ranking/ranking.controller");
-const ranking_service_1 = require("./ranking/ranking.service");
-let AppModule = class AppModule {
+let RankingService = class RankingService {
+    constructor(eventEmitter) {
+        this.eventEmitter = eventEmitter;
+    }
+    updateRanking(newData) {
+        console.log('Classement mis à jour avec :', newData);
+        this.eventEmitter.emit('ranking.updated', newData);
+    }
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [event_emitter_1.EventEmitterModule.forRoot()],
-        controllers: [ranking_controller_1.RankingController],
-        providers: [ranking_service_1.RankingService],
-    })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+exports.RankingService = RankingService;
+exports.RankingService = RankingService = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [event_emitter_1.EventEmitter2])
+], RankingService);
+//# sourceMappingURL=ranking.service.js.map
