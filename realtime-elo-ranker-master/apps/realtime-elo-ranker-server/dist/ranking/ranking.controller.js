@@ -15,42 +15,54 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RankingController = void 0;
 const common_1 = require("@nestjs/common");
 const ranking_service_1 = require("./ranking.service");
-const event_emitter_1 = require("@nestjs/event-emitter");
-const rxjs_1 = require("rxjs");
 let RankingController = class RankingController {
-    constructor(rankingService, eventEmitter) {
+    constructor(rankingService) {
         this.rankingService = rankingService;
-        this.eventEmitter = eventEmitter;
-        this.rankingUpdates = new rxjs_1.Subject();
-        this.eventEmitter.on('ranking.updated', (data) => {
-            this.rankingUpdates.next(data);
-        });
     }
-    updateRanking(rankingData) {
-        this.rankingService.updateRanking(rankingData);
-        this.eventEmitter.emit('ranking.updated', rankingData);
+    addPlayer(playerData) {
+        return this.rankingService.addPlayer(playerData);
     }
-    streamRankingUpdates() {
-        return this.rankingUpdates.asObservable();
+    updatePlayer(playerData) {
+        this.rankingService.updatePlayer(playerData);
+        return { message: 'Player updated successfully' };
+    }
+    getRanking() {
+        return this.rankingService.getPlayers();
+    }
+    deletePlayer(playerName) {
+        return this.rankingService.deletePlayer(playerName);
     }
 };
 exports.RankingController = RankingController;
+__decorate([
+    (0, common_1.Post)('add'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], RankingController.prototype, "addPlayer", null);
 __decorate([
     (0, common_1.Post)('update'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], RankingController.prototype, "updateRanking", null);
+], RankingController.prototype, "updatePlayer", null);
 __decorate([
-    (0, common_1.Sse)('stream'),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", rxjs_1.Observable)
-], RankingController.prototype, "streamRankingUpdates", null);
+    __metadata("design:returntype", Array)
+], RankingController.prototype, "getRanking", null);
+__decorate([
+    (0, common_1.Post)('delete'),
+    __param(0, (0, common_1.Body)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], RankingController.prototype, "deletePlayer", null);
 exports.RankingController = RankingController = __decorate([
     (0, common_1.Controller)('ranking'),
-    __metadata("design:paramtypes", [ranking_service_1.RankingService,
-        event_emitter_1.EventEmitter2])
+    __metadata("design:paramtypes", [ranking_service_1.RankingService])
 ], RankingController);
 //# sourceMappingURL=ranking.controller.js.map

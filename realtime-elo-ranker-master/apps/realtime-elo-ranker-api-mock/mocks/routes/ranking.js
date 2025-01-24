@@ -8,7 +8,7 @@ const fakeRanking = FAKE_PLAYERS.map((player, index) => ({
 module.exports = [
   {
     id: "get-ranking",
-    url: "/api/ranking",
+    url: "/ranking",
     method: "GET",
     variants: [
       {
@@ -23,7 +23,7 @@ module.exports = [
   },
   {
     id: "get-ranking-events-random",
-    url: "/api/ranking/events",
+    url: "/ranking/events",
     method: "GET",
     variants: [
       {

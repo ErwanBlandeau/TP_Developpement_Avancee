@@ -1,6 +1,18 @@
-import { EventEmitter2 } from '@nestjs/event-emitter';
+export interface Player {
+    name: string;
+    score: number;
+    rank: number;
+}
 export declare class RankingService {
-    private readonly eventEmitter;
-    constructor(eventEmitter: EventEmitter2);
-    updateRanking(newData: any): void;
+    private players;
+    addPlayer(player: Player): {
+        message: string;
+    };
+    updatePlayer(player: Player): {
+        message: string;
+    } | undefined;
+    deletePlayer(playerName: string): {
+        message: string;
+    };
+    getPlayers(): Player[];
 }

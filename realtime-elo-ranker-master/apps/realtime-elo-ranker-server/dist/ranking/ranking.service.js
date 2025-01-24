@@ -5,25 +5,47 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RankingService = void 0;
 const common_1 = require("@nestjs/common");
-const event_emitter_1 = require("@nestjs/event-emitter");
 let RankingService = class RankingService {
-    constructor(eventEmitter) {
-        this.eventEmitter = eventEmitter;
+    constructor() {
+        this.players = [];
     }
-    updateRanking(newData) {
-        console.log('Classement mis à jour avec :', newData);
-        this.eventEmitter.emit('ranking.updated', newData);
+    addPlayer(player) {
+        const existingPlayer = this.players.find((p) => p.name === player.name);
+        if (existingPlayer) {
+            return { message: 'Player already exists' };
+        }
+        this.players.push(player);
+        return { message: 'Player added successfully' };
+    }
+    updatePlayer(player) {
+        const existingPlayer = this.players.find((p) => p.name === player.name);
+        if (existingPlayer) {
+            existingPlayer.score = player.score;
+            existingPlayer.rank = player.rank;
+        }
+        else {
+            return { message: 'Player does not exist' };
+        }
+    }
+    deletePlayer(playerName) {
+        const playerIndex = this.players.findIndex((p) => p.name === playerName);
+        if (playerIndex !== -1) {
+            this.players.splice(playerIndex, 1);
+            return { message: 'Player deleted successfully' };
+        }
+        else {
+            return { message: 'Player does not exist' };
+        }
+    }
+    getPlayers() {
+        return this.players;
     }
 };
 exports.RankingService = RankingService;
 exports.RankingService = RankingService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [event_emitter_1.EventEmitter2])
+    (0, common_1.Injectable)()
 ], RankingService);
 //# sourceMappingURL=ranking.service.js.map

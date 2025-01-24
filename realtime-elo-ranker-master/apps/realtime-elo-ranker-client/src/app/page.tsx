@@ -60,7 +60,7 @@ function quickSortPlayers(arr: PlayerData[]): PlayerData[] {
  * @returns The home page component
  */
 export default function Home() {
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const API_BASE_URL = "http://localhost:3000"
 
   if (!API_BASE_URL) {
     throw new Error("API_BASE_URL is not defined");

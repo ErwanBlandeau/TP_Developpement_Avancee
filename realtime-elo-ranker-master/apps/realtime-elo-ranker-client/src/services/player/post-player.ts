@@ -1,4 +1,4 @@
-const URL = "/api/player";
+const URL = "/player";
 
 /**
  * Post a player to create it.

@@ -1,11 +1,23 @@
-import { RankingService } from './ranking.service';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Observable } from 'rxjs';
+import { RankingService, Player } from './ranking.service';
 export declare class RankingController {
     private readonly rankingService;
-    private readonly eventEmitter;
-    private rankingUpdates;
-    constructor(rankingService: RankingService, eventEmitter: EventEmitter2);
-    updateRanking(rankingData: any): void;
-    streamRankingUpdates(): Observable<any>;
+    constructor(rankingService: RankingService);
+    addPlayer(playerData: {
+        name: string;
+        score: number;
+        rank: number;
+    }): {
+        message: string;
+    };
+    updatePlayer(playerData: {
+        name: string;
+        score: number;
+        rank: number;
+    }): {
+        message: string;
+    };
+    getRanking(): Player[];
+    deletePlayer(playerName: string): {
+        message: string;
+    };
 }
